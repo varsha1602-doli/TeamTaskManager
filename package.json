@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "Team Task Manager — Full-stack project management platform",
   "scripts": {
-    "install": "npm install --prefix server && npm install --prefix client",
-    "build": "npm run build --prefix client",
-    "start": "node server/server.js",
+    "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
+    "start": "node server/server.js"
   },
   "engines": {
     "node": ">=18.0.0"
