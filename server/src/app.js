@@ -59,14 +59,15 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
 // ─── Serve React Frontend Build ─────────────────────
 const path = require('path');
-app.use(express.static(path.join(__dirname, '../../client/dist')));
+const clientDist = path.join(process.cwd(), 'client', 'dist');
+app.use(express.static(clientDist));
 
 // ─── Catch-All: Serve React for client-side routing ──
 app.use((req, res, next) => {
   if (req.originalUrl.startsWith('/api/')) {
     return res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
   }
-  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+  res.sendFile(path.join(clientDist, 'index.html'));
 });
 
 // ─── Global Error Handler ────────────────────────────
