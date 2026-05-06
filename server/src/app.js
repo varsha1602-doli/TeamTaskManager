@@ -59,15 +59,29 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
 // ─── Serve React Frontend Build ─────────────────────
 const path = require('path');
+const fs = require('fs');
 const clientDist = path.join(process.cwd(), 'client', 'dist');
-app.use(express.static(clientDist));
+const indexPath = path.join(clientDist, 'index.html');
+
+// Debug: log paths on startup
+console.log('[DEBUG] CWD:', process.cwd());
+console.log('[DEBUG] clientDist:', clientDist);
+console.log('[DEBUG] dist exists:', fs.existsSync(clientDist));
+console.log('[DEBUG] index.html exists:', fs.existsSync(indexPath));
+
+if (fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist));
+}
 
 // ─── Catch-All: Serve React for client-side routing ──
 app.use((req, res, next) => {
   if (req.originalUrl.startsWith('/api/')) {
     return res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
   }
-  res.sendFile(path.join(clientDist, 'index.html'));
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  res.status(503).json({ success: false, message: 'Frontend not built yet. Run: npm run build' });
 });
 
 // ─── Global Error Handler ────────────────────────────
