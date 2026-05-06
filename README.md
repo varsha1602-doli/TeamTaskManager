@@ -2,16 +2,12 @@
 
 A modern full-stack team collaboration platform for managing projects, tasks, and team productivity with role-based access control.
 
-## 🚀 Live Demo
-
-- **Frontend:** _Coming soon (Vercel)_
-- **Backend:** _Coming soon (Railway)_
 
 ### Demo Credentials
 
 | Role   | Email                    | Password    |
 |--------|--------------------------|-------------|
-| Admin  | varshadoli909@gmail.com  | V@rsha#16   |
+| Admin  | sample@gmail.com         | **********  |
 | Member | rahul@demo.com           | Member@123  |
 
 ## ✨ Features
