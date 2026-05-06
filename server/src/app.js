@@ -59,42 +59,16 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
 // ─── Serve React Frontend Build ─────────────────────
 const path = require('path');
-const fs = require('fs');
+const publicDir = path.join(__dirname, '..', 'public');
 
-// Try every possible location for client/dist
-const candidates = [
-  path.join(process.cwd(), 'client', 'dist'),
-  path.join(__dirname, '..', '..', 'client', 'dist'),
-  path.join(__dirname, '..', 'client', 'dist'),
-  path.join(process.cwd(), '..', 'client', 'dist'),
-  path.resolve('client', 'dist'),
-  path.resolve('..', 'client', 'dist'),
-];
-
-let clientDist = null;
-for (const p of candidates) {
-  console.log('[PATH CHECK]', p, '->', fs.existsSync(p));
-  if (fs.existsSync(path.join(p, 'index.html'))) {
-    clientDist = p;
-    break;
-  }
-}
-
-console.log('[RESOLVED] clientDist:', clientDist || 'NOT FOUND');
-
-if (clientDist) {
-  app.use(express.static(clientDist));
-}
+app.use(express.static(publicDir));
 
 // ─── Catch-All ───────────────────────────────────────
 app.use((req, res) => {
   if (req.originalUrl.startsWith('/api/')) {
     return res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
   }
-  if (clientDist) {
-    return res.sendFile(path.join(clientDist, 'index.html'));
-  }
-  res.status(503).json({ success: false, message: 'Frontend not found. Checked: ' + candidates.join(', ') });
+  res.sendFile(path.join(publicDir, 'index.html'));
 });
 
 // ─── Global Error Handler ────────────────────────────
