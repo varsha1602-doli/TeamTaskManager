@@ -1,0 +1,423 @@
+# Product Requirements Document (PRD)
+# Team Task Manager — Enterprise-Grade Collaborative Work Management Platform
+
+## 1. Project Overview
+
+### Product Name
+TaskForge
+
+Alternative premium names:
+- SyncSphere
+- SprintFlow
+- TeamPulse
+- OrbitTasks
+- CollabStack
+- WorkHive
+- ProjectPilot
+- NexTask
+
+## 2. Product Vision
+
+TaskForge is a modern full-stack team collaboration platform designed to help organizations efficiently manage projects, assign tasks, monitor team productivity, and track progress in real time using secure role-based access control.
+
+The platform combines:
+- Project management
+- Team collaboration
+- Smart dashboards
+- Task tracking
+- Secure authentication
+- Enterprise-level architecture
+
+into one scalable application.
+
+## 3. Problem Statement
+
+Small teams and startups often struggle with:
+- Unorganized task management
+- Lack of visibility into project progress
+- Poor team coordination
+- No centralized workflow system
+- Difficulty tracking overdue tasks
+- Inefficient role management
+
+Existing solutions are either:
+- Too complex
+- Too expensive
+- Overloaded with unnecessary features
+
+TaskForge solves this by providing a lightweight yet powerful project collaboration system with an intuitive UI and efficient workflow management.
+
+## 4. Goals & Objectives
+
+### Primary Goals
+- Build a production-ready full-stack application
+- Implement secure authentication & authorization
+- Create scalable REST APIs
+- Design professional dashboards
+- Ensure real-time project tracking experience
+- Deploy live on Railway
+
+### Business Goals
+- Demonstrate full-stack engineering skills
+- Showcase scalable backend architecture
+- Prove deployment & DevOps capabilities
+- Impress recruiters with production-level quality
+
+## 5. Target Users
+
+### 1. Admin
+Responsible for:
+- Creating projects
+- Managing teams
+- Assigning tasks
+- Monitoring progress
+- Managing members
+
+### 2. Team Members
+Responsible for:
+- Viewing assigned tasks
+- Updating task status
+- Collaborating within projects
+- Tracking deadlines
+
+## 6. Core Features
+
+### A. Authentication System
+- User Signup
+- User Login
+- JWT Authentication
+- Password Hashing
+- Session Persistence
+- Logout
+
+### Validations
+- Unique email validation
+- Strong password validation
+- Token verification
+- Protected routes
+
+### Security
+- bcrypt password encryption
+- JWT access tokens
+- Role-based authorization middleware
+
+### B. Role-Based Access Control (RBAC)
+
+#### Admin Permissions
+- Create/Edit/Delete Projects
+- Add/Remove Members
+- Assign Tasks
+- View Analytics Dashboard
+- Update Any Task
+- Manage Team
+
+#### Member Permissions
+- View assigned projects
+- Update assigned tasks
+- Change task status
+- View personal dashboard
+
+### C. Project Management Module
+- Create Project
+- Edit Project
+- Delete Project
+- Add project description
+- Add project deadlines
+- Assign team members
+- View project progress
+
+### D. Task Management Module
+- Create Tasks
+- Assign Tasks
+- Set Priority
+- Set Due Dates
+- Update Task Status
+- Mark Completed
+- Overdue Detection
+
+### Task Status
+- Todo
+- In Progress
+- Review
+- Completed
+
+### Priority Levels
+- Low
+- Medium
+- High
+- Critical
+
+### E. Dashboard & Analytics
+
+#### Admin Dashboard Metrics
+- Total Projects
+- Total Tasks
+- Completed Tasks
+- Pending Tasks
+- Overdue Tasks
+- Team Productivity
+
+#### Member Dashboard Metrics
+- Assigned Tasks
+- Completed Tasks
+- Upcoming Deadlines
+- Overdue Tasks
+
+### F. Team Collaboration
+- Invite team members
+- View team directory
+- Track member activity
+- Assign responsibilities
+
+### G. Notifications System
+- Deadline reminders
+- Task assignment alerts
+- Status update notifications
+- Overdue task warnings
+
+## 7. Technical Architecture
+
+### Frontend Stack
+- React.js
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- React Query
+- Framer Motion
+- Recharts
+
+### Backend Stack
+- Node.js
+- Express.js
+- JWT
+- bcrypt
+- Prisma ORM
+
+### Database
+Recommended:
+- PostgreSQL + Prisma
+
+Alternative:
+- MongoDB Atlas
+
+## 8. REST API Design
+
+### Authentication APIs
+POST /api/auth/register
+POST /api/auth/login
+GET /api/auth/me
+
+### Project APIs
+GET /api/projects
+POST /api/projects
+GET /api/projects/:id
+PUT /api/projects/:id
+DELETE /api/projects/:id
+
+### Task APIs
+GET /api/tasks
+POST /api/tasks
+PUT /api/tasks/:id
+DELETE /api/tasks/:id
+
+### Team APIs
+POST /api/projects/:id/members
+DELETE /api/projects/:id/members/:userId
+
+### Dashboard APIs
+GET /api/dashboard/admin
+GET /api/dashboard/member
+
+## 9. UI/UX Requirements
+
+### Design Style
+Modern SaaS dashboard inspired by:
+- Notion
+- Linear
+- Trello
+- Asana
+
+### UI Pages
+Public Pages:
+- Landing Page
+- Login Page
+- Signup Page
+
+Protected Pages:
+- Dashboard
+- Projects Page
+- Task Board
+- Team Page
+- Profile Page
+
+### UI Features
+- Responsive Design
+- Dark/Light Mode
+- Loading Skeletons
+- Toast Notifications
+- Smooth Animations
+- Search & Filters
+- Mobile Friendly
+
+## 10. Advanced Features
+
+### High-Impact Enhancements
+1. Kanban Board
+2. Real-Time Updates using Socket.io
+3. Activity Timeline
+4. Smart Filters
+5. Global Search
+6. File Attachments
+7. Productivity Insights
+
+## 11. Security Requirements
+- JWT authentication
+- Password hashing
+- Input validation
+- Protected APIs
+- Authorization middleware
+- Environment variables
+- Rate limiting
+
+## 12. Deployment Plan
+
+### Frontend Deployment
+- Vercel
+
+### Backend Deployment
+- Railway
+
+### Database Hosting
+- Neon PostgreSQL
+OR
+- MongoDB Atlas
+
+### Environment Variables
+PORT=
+DATABASE_URL=
+JWT_SECRET=
+CLIENT_URL=
+
+## 13. Folder Structure
+
+client/
+ ├── src/
+ │   ├── components/
+ │   ├── pages/
+ │   ├── hooks/
+ │   ├── services/
+ │   ├── context/
+ │   ├── routes/
+ │   └── utils/
+
+server/
+ ├── controllers/
+ ├── routes/
+ ├── middleware/
+ ├── models/
+ ├── services/
+ ├── utils/
+ ├── config/
+ └── server.js
+
+## 14. User Flow
+
+User Signup/Login
+↓
+Access Dashboard
+↓
+Admin Creates Project
+↓
+Add Team Members
+↓
+Create & Assign Tasks
+↓
+Members Update Progress
+↓
+Dashboard Tracks Analytics
+↓
+Project Completion
+
+## 15. Performance Requirements
+- API response under 500ms
+- Mobile responsive
+- Lazy loading
+- Optimized database queries
+- Pagination for large datasets
+
+## 16. Success Metrics
+
+### Technical Success
+- Fully deployed live app
+- All APIs working
+- Secure authentication
+- Clean architecture
+
+### Product Success
+- Smooth UX
+- Fast task management
+- Real-time collaboration feel
+- Professional dashboard experience
+
+## 17. Final Recommended Stack
+
+Frontend: React + Vite
+Styling: Tailwind CSS
+Backend: Node.js + Express
+Database: PostgreSQL
+ORM: Prisma
+Authentication: JWT
+Deployment: Railway
+Charts: Recharts
+State Management: React Query
+
+## 18. Development Timeline (8–12 Hours)
+
+- Project Setup — 1 Hour
+- Backend APIs — 3 Hours
+- Database & Auth — 2 Hours
+- Frontend UI — 3 Hours
+- Dashboard & Charts — 1 Hour
+- Deployment — 1 Hour
+- Testing & README — 1 Hour
+
+## 19. README Requirements
+- Project Overview
+- Features
+- Tech Stack
+- Setup Instructions
+- API Documentation
+- Deployment Links
+- Screenshots
+- Demo Credentials
+
+## 20. Demo Video Flow
+1. Introduction
+2. Signup/Login
+3. Create Project
+4. Add Members
+5. Create Tasks
+6. Assign Tasks
+7. Update Status
+8. Dashboard Analytics
+9. Mobile Responsiveness
+10. Deployment Showcase
+
+## 21. Final Product Positioning
+
+TaskForge is not just a CRUD application.
+
+It is a:
+- Scalable SaaS-style collaboration platform
+- Production-grade project management system
+- Enterprise-inspired workflow manager
+- Full-stack architecture showcase
+
+designed to demonstrate:
+- Backend engineering
+- Frontend craftsmanship
+- Database design
+- Authentication systems
+- Deployment expertise
+- Clean software architecture
