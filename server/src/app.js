@@ -57,18 +57,15 @@ app.use('/api/projects', teamRoutes); // team routes mounted under /api/projects
 app.use('/api/tasks', taskRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/users', userRoutes);
-const path = require('path');
-
 // ─── Serve React Frontend Build ─────────────────────
+const path = require('path');
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
-// ─── API 404 Handler ─────────────────────────────────
-app.all('/api/*', (req, res) => {
-  res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
-});
-
 // ─── Catch-All: Serve React for client-side routing ──
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
+  }
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
