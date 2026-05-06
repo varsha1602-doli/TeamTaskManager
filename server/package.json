@@ -6,7 +6,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "seed": "node prisma/seed.js",
-    "build": "npx prisma generate && npx prisma migrate deploy"
+    "build": "npx prisma generate"
   },
   "keywords": [],
   "author": "",
