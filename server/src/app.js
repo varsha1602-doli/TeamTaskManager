@@ -60,28 +60,41 @@ app.use('/api/users', userRoutes);
 // ─── Serve React Frontend Build ─────────────────────
 const path = require('path');
 const fs = require('fs');
-const clientDist = path.join(process.cwd(), 'client', 'dist');
-const indexPath = path.join(clientDist, 'index.html');
 
-// Debug: log paths on startup
-console.log('[DEBUG] CWD:', process.cwd());
-console.log('[DEBUG] clientDist:', clientDist);
-console.log('[DEBUG] dist exists:', fs.existsSync(clientDist));
-console.log('[DEBUG] index.html exists:', fs.existsSync(indexPath));
+// Try every possible location for client/dist
+const candidates = [
+  path.join(process.cwd(), 'client', 'dist'),
+  path.join(__dirname, '..', '..', 'client', 'dist'),
+  path.join(__dirname, '..', 'client', 'dist'),
+  path.join(process.cwd(), '..', 'client', 'dist'),
+  path.resolve('client', 'dist'),
+  path.resolve('..', 'client', 'dist'),
+];
 
-if (fs.existsSync(clientDist)) {
+let clientDist = null;
+for (const p of candidates) {
+  console.log('[PATH CHECK]', p, '->', fs.existsSync(p));
+  if (fs.existsSync(path.join(p, 'index.html'))) {
+    clientDist = p;
+    break;
+  }
+}
+
+console.log('[RESOLVED] clientDist:', clientDist || 'NOT FOUND');
+
+if (clientDist) {
   app.use(express.static(clientDist));
 }
 
-// ─── Catch-All: Serve React for client-side routing ──
-app.use((req, res, next) => {
+// ─── Catch-All ───────────────────────────────────────
+app.use((req, res) => {
   if (req.originalUrl.startsWith('/api/')) {
     return res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
   }
-  if (fs.existsSync(indexPath)) {
-    return res.sendFile(indexPath);
+  if (clientDist) {
+    return res.sendFile(path.join(clientDist, 'index.html'));
   }
-  res.status(503).json({ success: false, message: 'Frontend not built yet. Run: npm run build' });
+  res.status(503).json({ success: false, message: 'Frontend not found. Checked: ' + candidates.join(', ') });
 });
 
 // ─── Global Error Handler ────────────────────────────
