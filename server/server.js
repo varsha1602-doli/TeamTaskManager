@@ -1,10 +1,9 @@
-const config = require('./src/config');
 const app = require('./src/app');
 const logger = require('./src/utils/logger');
 
-const PORT = config.port;
+const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   logger.info(`Server running on port ${PORT}`);
-  logger.info(`Environment: ${config.nodeEnv}`);
+  logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
